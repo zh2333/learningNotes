@@ -1,0 +1,18 @@
+id:  i-bp1azn4dqkohmyn0hb1z
+121.41.123.187
+密码:  Np@.GWgA7xXyu3M
+
+应用服务器1:
+i-m5egjd4n11pwtlyrn1i7
+120.27.18.232
+yxApe*Kg*7M-9nR
+
+应用服务器2:
+i-m5egjd4n11pwtlyrn1i8
+118.190.145.49
+yxApe*Kg*7M-9nR
+
+反向代理服务器:
+ i-m5egjd4n11pwtlyrn1i9
+118.190.149.138
+yxApe*Kg*7M-9nR
