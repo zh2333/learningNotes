@@ -353,3 +353,364 @@ buildscript代码块会优先执行, 依赖可以定义在这个代码块中
 
 **系统的存储设计:**
 
+![image-20200919101050717](E:\learningNotes\microServiceWeather\pic\image-20200919101050717.png)
+
+
+
+#### 天气数据采集微服务实现
+
+![image-20200919101137643](E:\learningNotes\microServiceWeather\pic\image-20200919101137643.png)
+
+从第三方接口同步天气数据到本地redis
+
+
+
+#### 天气数据api微服务
+
+![image-20200919105354609](E:\learningNotes\microServiceWeather\pic\image-20200919105354609.png)
+
+将天气查询接口暴露给外部
+
+
+
+#### 天气预报微服务
+
+通过浏览器UI界面调用天气数据api微服务, 并将数据展示在前端
+
+![image-20200919111549820](E:\learningNotes\microServiceWeather\pic\image-20200919111549820.png)
+
+#### 城市数据API微服务的实现
+
+![image-20200919114055404](E:\learningNotes\microServiceWeather\pic\image-20200919114055404.png)
+
+
+
+
+
+### spring Cloud
+
+用于微服务的管理
+
+#### spring cloud简介
+
+* 配置管理
+
+* 服务注册
+
+* 服务发现
+
+* 断路器
+
+  用于保护系统, 防止过载
+
+* 负载均衡
+
+* 智能路由
+
+* 微代理
+
+* 服务间调用
+
+
+
+#### spring boot和spring cloud的关系
+
+* spring boot是构建spring cloud的基石
+
+  ![image-20200919131740677](E:\learningNotes\microServiceWeather\pic\image-20200919131740677.png)
+
+
+
+
+
+
+
+#### spring cloud配置入门
+
+![image-20200919131845514](E:\learningNotes\microServiceWeather\pic\image-20200919131845514.png)
+
+
+
+![image-20200919131901177](E:\learningNotes\microServiceWeather\pic\image-20200919131901177.png)
+
+
+
+![image-20200919131918771](E:\learningNotes\microServiceWeather\pic\image-20200919131918771.png)
+
+
+
+#### spring cloud子项目介绍
+
+* spring cloud config
+
+  配置中心, 利用git来集中管理程序的配置
+
+* spring cloud NetFix
+
+  继承众多组件
+
+* spring cloud bus
+
+  消息总线, 利用分布式消息将服务和服务实例连接在一起, 用于在一个集群中传播状态的变化, 比如配置更改的事件, 可与spring cloud config联合实现热部署
+
+* spring cloud for cloud foundry
+
+
+
+### 微服务注册与发现
+
+#### 如何发现服务
+
+* 通过URL来访问服务
+
+  问题:
+
+  1. 需要绑定主机
+  2. 难记
+  3. 难以做到负载均衡
+
+* 服务注册于发现
+
+  通过服务名称来发现服务
+
+  1. 服务注册
+
+     **Eureka**
+
+  2. 服务发现
+
+
+
+#### 集成Eureka Server
+
+![image-20200919133524372](E:\learningNotes\microServiceWeather\pic\image-20200919133524372.png)
+
+
+
+![image-20200919133558534](E:\learningNotes\microServiceWeather\pic\image-20200919133558534.png)
+
+
+
+**项目配置**
+
+![image-20200919135452353](E:\learningNotes\microServiceWeather\pic\image-20200919135452353.png)
+
+
+
+#### 集成Euraka Client 
+
+![image-20200919135833454](E:\learningNotes\microServiceWeather\pic\image-20200919135833454.png)
+
+
+
+#### 实现天气预报系统的服务注册于发现
+
+![image-20200919141644928](E:\learningNotes\microServiceWeather\pic\image-20200919141644928.png)
+
+
+
+### 微服务的消费
+
+#### 微服务消费模式
+
+* 服务直连模式
+
+  特点
+
+  1. 简单明了  restTemplate
+  2. 平台无关性
+  3. 无法保证服务的可用性
+  4. 生产环境用的少
+
+* 客户端发现模式
+
+  1. 服务实例启动后, 将自己的位置信息提交到服务注册表
+  2. 客户端从服务注册表查询, 来获取可用的服务实例
+  3. 客户端自行使用负载均衡算法从多个服务器实例中选择一个
+
+![image-20200919151427231](E:\learningNotes\microServiceWeather\pic\image-20200919151427231.png)
+
+* 服务端发现模式
+
+  ![image-20200919151459934](E:\learningNotes\microServiceWeather\pic\image-20200919151459934.png)
+
+负载均衡器部署在服务端
+
+
+
+
+
+#### 常见的微服务的消费者
+
+* HttpClient
+
+  ![image-20200919151613525](E:\learningNotes\microServiceWeather\pic\image-20200919151613525.png)
+
+
+
+​	![image-20200919151633078](E:\learningNotes\microServiceWeather\pic\image-20200919151633078.png)
+
+
+
+​	![image-20200919151643583](E:\learningNotes\microServiceWeather\pic\image-20200919151643583.png)
+
+
+
+* Ribbon
+
+  基于客户端的负载均衡工具
+
+  ![image-20200919151738482](E:\learningNotes\microServiceWeather\pic\image-20200919151738482.png)
+
+
+
+![image-20200919151753242](E:\learningNotes\microServiceWeather\pic\image-20200919151753242.png)
+
+
+
+​	![image-20200919151804075](E:\learningNotes\microServiceWeather\pic\image-20200919151804075.png)
+
+
+
+​	![image-20200919151829406](E:\learningNotes\microServiceWeather\pic\image-20200919151829406.png)		通过服务名称来访问
+
+​		![image-20200919151912904](E:\learningNotes\microServiceWeather\pic\image-20200919151912904.png)
+
+
+
+* Feign
+
+  用于实现服务之间的相互调用, 服务间互相访问
+
+  > feign, springcloud, spring boot的版本关系是强依赖的 
+  >
+  > 如果要在一个微服务中调用另一个微服务就要使用到feign, 首先要在Application 类上新增加一个注解@EnableFeignClients , 然后在service目录下新建一个接口, 并且指定要访问的服务.其次在接口中定义一个和想要访问的服务中的方法相同名称的方法, 并加上相同的@GetMapping注解.
+  >
+  > 例如, 我现在想要调用城市微服务中的listCity方法, 首先在service包下定义一个cityClient接口, 然后在这个接口中定义一个相同的listCity方法, 并加上注解
+  >
+  > ```java
+  > @FeignClient("msa-weather-city-eureka")
+  > @Service
+  > public interface CityClient {
+  > 	
+  > 	@GetMapping("cities")
+  > 	List<City> listCity() throws Exception;
+  > 
+  > }
+  > ```
+  >
+  > 然后在你要使用该方法的地方将CityClient接口使用@Autowired注入, 并调用.这样就能实现在一个方法中调用另一个服务的方法
+
+  ![image-20200919151939730](E:\learningNotes\microServiceWeather\pic\image-20200919151939730.png)
+
+  ​	开发环境
+
+  ​	![image-20200919152006419](E:\learningNotes\microServiceWeather\pic\image-20200919152006419.png)
+
+
+
+![image-20200919162652207](E:\learningNotes\microServiceWeather\pic\image-20200919162652207.png)
+
+​	![image-20200919162510468](E:\learningNotes\microServiceWeather\pic\image-20200919162510468.png)
+
+ 
+
+
+
+#### 实现服务的负载均衡以及高可用
+
+![image-20200919165708688](E:\learningNotes\microServiceWeather\pic\image-20200919165708688.png)
+
+> 实现微服务的高可用, 可以将一个微服务多开几个实例. 当一个挂了, 其他的不影响
+
+
+
+### API网关
+
+统一API入口的组件, 验证访问者等作用
+
+#### API网关意义
+
+* 可以集合多个API.
+
+  >  如果一个微服务要调用另一个微服务的API, 只需要将请求交给API网关即可, 由API网关来转发, 调用者无需关注被调用者长什么样子
+
+* 统一API入口
+
+  ![image-20200919181115047](E:\learningNotes\microServiceWeather\pic\image-20200919181115047.png)
+
+* 避免将内部信息泄露给外部
+
+  保证系统安全.避免未授权的api访问
+
+* 为微服务添加额外的安全层
+
+* 支持混合通信协议
+
+* 有效的降低苟江微服务的复杂性
+
+* 微服务模拟与虚拟化
+
+
+
+* 弊端
+
+  1. 在架构上需要额外考虑更多的编排与管理
+
+  2. 路由配置要统一管理
+
+  3. 可能引发单点故障
+
+     API网关挂了, 整个系统的服务都不可用
+
+#### 常见API网关
+
+* NGINX
+
+  ![image-20200919181630717](E:\learningNotes\microServiceWeather\pic\image-20200919181630717.png)
+
+* Zuul
+
+  ![image-20200919181702212](E:\learningNotes\microServiceWeather\pic\image-20200919181702212.png)
+
+  ​	![image-20200919182207271](E:\learningNotes\microServiceWeather\pic\image-20200919182207271.png)
+
+* kong
+
+  ![image-20200919181751292](E:\learningNotes\microServiceWeather\pic\image-20200919181751292.png)
+
+
+
+
+
+#### 集成Zuul
+
+![image-20200919182235599](E:\learningNotes\microServiceWeather\pic\image-20200919182235599.png)
+
+​	![image-20200919182306911](E:\learningNotes\microServiceWeather\pic\image-20200919182306911.png)
+
+> 使用Zuul, 要在Application 类上面新增加一个注解@EnableZuulProxy  
+>
+> ![image-20200919183729493](E:\learningNotes\microServiceWeather\pic\image-20200919183729493.png)
+>
+> 红框的地方要严格和后面需要匹配的路径一致
+
+![image-20200919181919255](E:\learningNotes\microServiceWeather\pic\image-20200919181919255.png)
+
+
+
+​	**配置**
+
+![image-20200919181943150](E:\learningNotes\microServiceWeather\pic\image-20200919181943150.png)
+
+
+
+​	**架构**
+
+​	**![image-20200919182015130](E:\learningNotes\microServiceWeather\pic\image-20200919182015130.png)**
+
+
+
+​	天气预报微服务的API网关路由规则:
+
+​		![image-20200919184235757](E:\learningNotes\microServiceWeather\pic\image-20200919184235757.png)
