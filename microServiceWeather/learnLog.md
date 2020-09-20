@@ -693,7 +693,7 @@ buildscript代码块会优先执行, 依赖可以定义在这个代码块中
 >
 > ![image-20200919183729493](E:\learningNotes\microServiceWeather\pic\image-20200919183729493.png)
 >
-> 红框的地方要严格和后面需要匹配的路径一致
+> **红框的地方要严格和后面需要匹配的路径一致**
 
 ![image-20200919181919255](E:\learningNotes\microServiceWeather\pic\image-20200919181919255.png)
 
@@ -714,3 +714,202 @@ buildscript代码块会优先执行, 依赖可以定义在这个代码块中
 ​	天气预报微服务的API网关路由规则:
 
 ​		![image-20200919184235757](E:\learningNotes\microServiceWeather\pic\image-20200919184235757.png)
+
+
+
+### 微服务的集中化配置
+
+##### 为什么要集中化配置
+
+* 微服务数量多, 配置多
+* 手工管理配置繁琐
+
+
+
+##### 配置分类
+
+* 按照配置来源划分
+
+  源代码, 文件, 数据库连接, 远程调用
+
+* 按照配置的环境划分
+
+  开发环境, 测试环境, 预发布环境,生产环境
+
+* 按照配置的集成阶段划分
+
+  编译时, 打包时, 运行时
+
+* 按照加载方式
+
+  启动加载和动态加载
+
+
+
+##### 配置中心的要求
+
+![image-20200920101527608](E:\learningNotes\microServiceWeather\pic\image-20200920101527608.png)
+
+
+
+##### 配置工具
+
+![image-20200920101626374](E:\learningNotes\microServiceWeather\pic\image-20200920101626374.png)
+
+
+
+#### 使用config实现的配置中心Server端
+
+![image-20200920101733760](E:\learningNotes\microServiceWeather\pic\image-20200920101733760.png)
+
+
+
+
+
+![image-20200920101745006](E:\learningNotes\microServiceWeather\pic\image-20200920101745006.png)
+
+
+
+![image-20200920101752997](E:\learningNotes\microServiceWeather\pic\image-20200920101752997.png)
+
+
+
+
+
+![image-20200920101806685](E:\learningNotes\microServiceWeather\pic\image-20200920101806685.png)
+
+
+
+![image-20200920101822967](E:\learningNotes\microServiceWeather\pic\image-20200920101822967.png)
+
+
+
+> 配置项目完成后可以在浏览器地址栏中输入localhost:8888/auther/dev, 查看配置信息
+
+
+
+#### 使用Config实现的配置中心Client端
+
+​	![image-20200920104043935](E:\learningNotes\microServiceWeather\pic\image-20200920104043935.png)
+
+
+
+
+
+![image-20200920104054379](E:\learningNotes\microServiceWeather\pic\image-20200920104054379.png)
+
+​	![image-20200920104104379](E:\learningNotes\microServiceWeather\pic\image-20200920104104379.png)
+
+​	![image-20200920104127383](E:\learningNotes\microServiceWeather\pic\image-20200920104127383.png)
+
+
+
+​	![image-20200920104142462](E:\learningNotes\microServiceWeather\pic\image-20200920104142462.png)
+
+
+
+
+
+##### 配置中心文件的命名规则
+
+![image-20200920105728700](E:\learningNotes\microServiceWeather\pic\image-20200920105728700.png)
+
+
+
+![image-20200920105932633](E:\learningNotes\microServiceWeather\pic\image-20200920105932633.png)
+
+
+
+### 熔断机制
+
+当系统请求数量过载, 对于新到来的请求, 不再为其服务, 而是返回一个默认值, 比如一个提示, 
+
+
+
+#### 服务熔断
+
+* 断路器
+
+  返回一个默认值
+
+* 断路器模式
+
+  ![image-20200920111848032](E:\learningNotes\microServiceWeather\pic\image-20200920111848032.png)
+
+  当请求失败的次数超过一定的阈值, 断路器就会打开, 代理开始运作, 响应给请求放一个固定的值.当服务初步恢复时, 断路器会进入半打开模式, 允许少量的请求通过, 用于缓冲
+
+  
+
+  **Hystrix**
+
+  ![image-20200920112328598](E:\learningNotes\microServiceWeather\pic\image-20200920112328598.png)
+
+  
+
+  ![image-20200920112347814](E:\learningNotes\microServiceWeather\pic\image-20200920112347814.png)
+
+
+
+#### 熔断的意义
+
+* 保持系统稳定
+
+* 减少性能损耗
+
+* 可以做到及时响应
+
+  错误提示信息
+
+* 熔断器的阈值可以定制
+
+
+
+#### 熔断器的功能
+
+* 异常处理
+
+* 日志记录
+
+* 测试失败的操作
+
+* 手动复位
+
+  强行关闭断路器
+
+* 并发
+
+* 加速短路
+
+* 重试失败请求
+
+
+
+#### 熔断和降级的区别
+
+* 相似性
+
+  1. 目的一致
+
+     保护系统
+
+  2. 表现形式
+
+     让用户感知到当前服务不可用
+
+  3. 粒度一致
+
+     服务的级别
+
+* 区别
+
+  1. 触发条件不同
+     * 服务熔断一般是由某个服务引起的
+     * 服务降级是从系统整体的负载来考虑的
+  2. 管理目标的层次不同
+     * 熔断, 每个微服务都需服务熔断, 是没有层次的
+     * 降级, 是从业务角度考虑, 是有层次的, 一般降级是从最外围的服务开始
+
+
+
+#### 集成Hystrix
+
