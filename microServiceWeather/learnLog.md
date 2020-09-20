@@ -1,4 +1,4 @@
-##  s微服务气象实战
+##   s微服务气象实战
 
 
 
@@ -913,3 +913,22 @@ buildscript代码块会优先执行, 依赖可以定义在这个代码块中
 
 #### 集成Hystrix
 
+![image-20200920113338148](E:\learningNotes\microServiceWeather\pic\image-20200920113338148.png)
+
+
+
+![image-20200920113348166](E:\learningNotes\microServiceWeather\pic\image-20200920113348166.png)
+
+​	![image-20200920113356987](E:\learningNotes\microServiceWeather\pic\image-20200920113356987.png)
+
+​	
+
+![image-20200920113423649](E:\learningNotes\microServiceWeather\pic\image-20200920113423649.png)
+
+
+
+
+
+#### 天气预报系统集成Hystrix
+
+![image-20200920130415083](E:\learningNotes\microServiceWeather\pic\image-20200920130415083.png)
