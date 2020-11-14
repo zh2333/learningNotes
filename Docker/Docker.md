@@ -1126,3 +1126,9 @@ Waiting for the cluster to join
 ![image-20201108201132568](E:\learningNotes\Docker\pic\image-20201108201132568.png)
 
 将Dockerfile和jar文件放到同一个目录, 后执行 `docker build -t testDocker`, 接着直接运行即可
+
+1. 构建springboot项目
+2. 大伯啊应用
+3. 编写dockfile
+4. 构建镜像
+5. 发布运行
